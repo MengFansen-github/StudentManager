@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mfs.programmer.dao.ClazzDao">
+<!--添加用户  -->
+	<insert id="add" parameterType="Clazz">
+		insert into clazz(id,gradeId,name,remark) values(null,#{gradeId},#{name},#{remark})
+	</insert>
+<!-- 列表展示 -->
+	<select id="findList" parameterType="Map" resultType="Clazz">
+  		select * from clazz where 1=1 
+  		<if test="name !=null">
+  			and name like #{name} 
+  		</if>
+  		<if test="gradeId !=null">
+  			and gradeId = #{gradeId} 
+  		</if>
+  		limit #{offset},#{pageSize}
+  	</select>
+<!--获取数量 -->
+	<select id="getTotal" parameterType="Map" resultType="Integer">
+		select count(id) from clazz where 1=1 
+  		<if test="name !=null">
+  			and name like #{name} 
+  		</if>
+  		<if test="gradeId !=null">
+  			and gradeId = #{gradeId} 
+  		</if>
+	</select>
+<!--修改用户 -->
+	<update id="edit" parameterType="Clazz">
+		update clazz set name = #{name},gradeId = #{gradeId},remark = #{remark} where id = #{id}
+	</update>
+<!--删除用户  -->
+	<delete id="delete" parameterType="String" >
+		delete from clazz where id in (${value})
+	</delete>
+<!-- 查询所有 -->
+	<select id="findAll" resultType="Grade">
+  		select * from clazz
+  	</select>
+</mapper>
